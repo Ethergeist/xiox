@@ -1,8 +1,14 @@
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
-#include<stdbool.h>
-#include<stdint.h>
-#include<string.h>
+#define _XOPEN_SOURCE 700
+#include <signal.h>
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
 
 /** @brief 8-bit signed int */
 typedef int8_t i8;
@@ -40,6 +46,18 @@ typedef double f64;
     #define INLINE static inline
     #define NOINLINE
     #define STATIC_ASSERT static_assert
+#endif
+
+#ifdef TDEBUG
+    #define LOG_DEBUG(fmt, ...) fprintf(stdout, "DEBUG: " fmt "\n", __VA_ARGS__)
+    #define LOG_WARN(fmt, ...) fprintf(stderr, "WARN: " fmt "\n", __VA_ARGS__)
+    #define LOG_ERROR(fmt, ...) fprintf(stderr, "ERROR: " fmt "\n", __VA_ARGS__)
+    #define LOG_PERROR(error) perror("ERROR: " error)
+#else
+    #define LOG_DEBUG(...)
+    #define LOG_WARN(...)
+    #define LOG_ERROR(fmt, ...) fprintf(stderr, "ERROR: " fmt "\n", __VA_ARGS__)
+    #define LOG_PERROR(error) perror("ERROR: " error)
 #endif
 
 STATIC_ASSERT(sizeof(f32) == 4, "f32 should be 4 bytes");

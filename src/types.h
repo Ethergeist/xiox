@@ -21,11 +21,6 @@ typedef struct Frame {
     Pixel pixels[];
 } Frame;
 
-typedef struct Screen {
-    u8 width;
-    u8 height;
-} Screen;
-
 typedef struct Level {
     char foreground[4096][1024];
     char background[4096][1024];
